@@ -1,7 +1,6 @@
 const express = require("express");
 const server = express();
 const sha1 = require("sha1");
-let myKey = "project-x-secret-key";
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const { schemaLogin } = require("../utils/validators");
@@ -33,7 +32,7 @@ userController.auth = async (req, res) => {
             role,
             status,          
           },
-            myKey
+            process.env.TOKEN_SECRET
         );
         res.status(200).send({ msg: 'Welcome', token });  
       }
@@ -118,28 +117,7 @@ userController.getUser = async (req, res) => {
   
     try {
       const user = await User.findById(userId);
-      res.status(200).send(user);
-  
-      // const token = req.headers.authorization.replace("Bearer ", "");
-      // const { is_admin } = jwt.verify(token, myKey);
-      // const { user_id } = jwt.decode(token);
-      // let sql = "SELECT user_id, username, is_admin, user_image FROM user"; //USER QUERY: IT BRINGS ALL THE FIELDS.
-      // let sql2 = `SELECT * FROM user WHERE user_id != ${user_id} ORDER BY username asc`;
-      // if (is_admin) {
-      //   connection.query(sql, (error, results) => {
-      //     if (error) console.log(error);
-  
-      //     res.send(
-      //       results.map(user => ({ ...user, is_admin: Boolean(user.is_admin) }))
-      //     );
-      //   });
-      // } else {
-      //   connection.query(sql2, (error, results) => {
-      //     if (error) console.log(error);
-  
-      //     res.send(results);
-      //   });
-      // }
+      res.status(200).send(user);  
     } catch {
       res.sendStatus(401);
     }
@@ -152,28 +130,7 @@ userController.getUser = async (req, res) => {
     try {
       const user = await User.deleteOne(userId);
       res.status(200).send(user);
-  
-      // const token = req.headers.authorization.replace("Bearer ", "");
-      // const { is_admin } = jwt.verify(token, myKey);
-      // const { user_id } = jwt.decode(token);
-      // let sql = "SELECT user_id, username, is_admin, user_image FROM user"; //USER QUERY: IT BRINGS ALL THE FIELDS.
-      // let sql2 = `SELECT * FROM user WHERE user_id != ${user_id} ORDER BY username asc`;
-      // if (is_admin) {
-      //   connection.query(sql, (error, results) => {
-      //     if (error) console.log(error);
-  
-      //     res.send(
-      //       results.map(user => ({ ...user, is_admin: Boolean(user.is_admin) }))
-      //     );
-      //   });
-      // } else {
-      //   connection.query(sql2, (error, results) => {
-      //     if (error) console.log(error);
-  
-      //     res.send(results);
-      //   });
-      // }
-    } catch {
+      } catch {
       res.sendStatus(401);
     }
   };
@@ -188,36 +145,10 @@ userController.getUser = async (req, res) => {
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
-  
-    console.log('req.body', username)
-    console.log('req.body', email)
-    console.log('req.body', role)
-    console.log('req.body', status)
-  
+    
     try {
       const user = await User.updateOne(userId);
-      res.status(200).send(user);
-  
-      // const token = req.headers.authorization.replace("Bearer ", "");
-      // const { is_admin } = jwt.verify(token, myKey);
-      // const { user_id } = jwt.decode(token);
-      // let sql = "SELECT user_id, username, is_admin, user_image FROM user"; //USER QUERY: IT BRINGS ALL THE FIELDS.
-      // let sql2 = `SELECT * FROM user WHERE user_id != ${user_id} ORDER BY username asc`;
-      // if (is_admin) {
-      //   connection.query(sql, (error, results) => {
-      //     if (error) console.log(error);
-  
-      //     res.send(
-      //       results.map(user => ({ ...user, is_admin: Boolean(user.is_admin) }))
-      //     );
-      //   });
-      // } else {
-      //   connection.query(sql2, (error, results) => {
-      //     if (error) console.log(error);
-  
-      //     res.send(results);
-      //   });
-      // }
+      res.status(200).send(user);  
     } catch {
       res.sendStatus(401);
     }

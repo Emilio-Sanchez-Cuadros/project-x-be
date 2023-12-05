@@ -3,7 +3,8 @@ const express = require('express');
 const app = express();
 const connectDB = require('./config/db.js');
 const bodyparser = require('body-parser');
-var cors = require('cors')
+var cors = require('cors');
+require('dotenv').config();
 
 connectDB.connect();
 
