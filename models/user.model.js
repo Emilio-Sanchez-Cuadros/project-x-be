@@ -69,6 +69,10 @@ const User = new mongoose.Schema({
     }],
     default: []
   },
+  userProfile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserProfile'
+  },
   // Model references below
   createdByUser: {
     // Users created by other user

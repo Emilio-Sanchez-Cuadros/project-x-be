@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const multer = require("multer");
 
-const userController = require("../controllers/userController.js");
+const userProfileController = require("../controllers/userProfileController.js");
 
 const storage = multer.diskStorage({
   destination: "public/avatars",
@@ -15,11 +15,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage }).single("album_image");
 
-router.get("/", userController.list);
-router.post("/register", userController.save);
-router.post("/auth", userController.auth);
-router.get("/:userId", userController.getUser);
-router.delete("/:userId", userController.delete);
-router.put("/:userId", userController.update);
+router.post("/save", userProfileController.save);
+router.get("/:userProfileId", userProfileController.get);
+router.delete("/:userProfileId", userProfileController.delete);
+router.put("/:userProfileId", userProfileController.update);
 
 module.exports = router;

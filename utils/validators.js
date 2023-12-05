@@ -8,6 +8,12 @@ const schemaRegister = Joi.object({
     status: Joi.string()
 });
 
+const schemaLogin = Joi.object({
+    username: Joi.string().min(4).max(255).required(),
+    password: Joi.string().min(6).max(1024).required(),
+});
+
 module.exports = {
-    schemaRegister
+    schemaRegister,
+    schemaLogin
 }
